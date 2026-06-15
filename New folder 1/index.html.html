@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<script src="SCRIPT.JS"></script>
+<css src="style.css"></css>
+<title>ANI ONE IN INDIA</title>
+<style>
+/* ───── RESET & TOKENS ───── */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080b12;
+  --surface:#0f1320;
+  --card:#141826;
+  --card2:#1a1f30;
+  --accent:#6c63ff;
+  --accent2:#4f46e5;
+  --accent3:#a78bfa;
+  --glow:rgba(108,99,255,.25);
+  --pink:#ec4899;
+  --cyan:#06b6d4;
+  --gold:#f59e0b;
+  --text:#f0f0f8;
+  --muted:#8892a4;
+  --dim:#4e5770;
+  --border:rgba(255,255,255,.07);
+  --border2:rgba(255,255,255,.12);
+  --radius:12px;
+  --radius-lg:18px;
+  --radius-xl:24px;
+  --font:'Outfit',sans-serif;
+  --font2:'Space Grotesk',sans-serif;
+  --nav-h:66px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+img{display:block;max-width:100%}
+button,input,textarea,select{font-family:inherit}
+a{color:inherit;text-decoration:none}
+
+/* ───── SCROLLBAR ───── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:4px}
+
+/* ───── PAGES ───── */
+.page{display:none;animation:fadeIn .3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ───── NAV ───── */
+nav{
+  position:sticky;top:0;z-index:200;
+  height:var(--nav-h);
+  background:rgba(8,11,18,.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1rem,4vw,2.5rem);
+  gap:16px;
+}
+.logo{font-family:var(--font2);font-size:22px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),var(--pink));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff}
+.logo-text{background:linear-gradient(135deg,var(--accent3),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+.nav-center{display:flex;align-items:center;gap:4px}
+.nav-link{background:none;border:none;color:var(--muted);font-size:14px;font-weight:500;padding:7px 14px;border-radius:20px;cursor:pointer;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.nav-link:hover{color:var(--text);background:var(--card)}
+.nav-link.active{color:var(--accent3);background:rgba(108,99,255,.12)}
+
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.btn-upload{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;white-space:nowrap}
+.btn-upload:hover{opacity:.88;transform:translateY(-1px)}
+
+/* hamburger */
+.hamburger{display:none;background:none;border:1.5px solid var(--border2);color:var(--text);padding:6px 9px;border-radius:8px;cursor:pointer;font-size:18px}
+.mobile-menu{display:none;flex-direction:column;gap:4px;background:var(--surface);border-bottom:1px solid var(--border);padding:12px clamp(1rem,4vw,2.5rem)}
+.mobile-menu.open{display:flex}
+.mobile-menu .nav-link{justify-content:flex-start;border-radius:8px}
+
+/* ───── HERO ───── */
+.hero{
+  min-height:calc(100vh - var(--nav-h));
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:60px clamp(1rem,5vw,4rem);
+  text-align:center;
+}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 20%,rgba(108,99,255,.18) 0%,transparent 70%)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 80% 80%,rgba(236,72,153,.1) 0%,transparent 70%)}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35}
+.orb1{width:500px;height:500px;background:var(--accent);top:-100px;left:-150px}
+.orb2{width:400px;height:400px;background:var(--pink);bottom:-100px;right:-100px}
+.orb3{width:300px;height:300px;background:var(--cyan);top:50%;left:50%;transform:translate(-50%,-50%)}
+
+.hero-content{position:relative;z-index:1;max-width:780px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.3);color:var(--accent3);font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;margin-bottom:24px;letter-spacing:.05em;text-transform:uppercase}
+.hero h1{font-family:var(--font2);font-size:clamp(36px,7vw,72px);font-weight:700;line-height:1.1;margin-bottom:22px}
+.hero h1 span{background:linear-gradient(135deg,var(--accent3) 0%,var(--pink) 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);font-size:clamp(15px,2vw,18px);max-width:520px;margin:0 auto 36px}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:13px 32px;border-radius:26px;font-size:15px;font-weight:600;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px var(--glow)}
+.btn-ghost{background:none;border:1.5px solid var(--border2);color:var(--text);padding:13px 32px;border-radius:26px;font-size:15px;font-weight:600;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.btn-ghost:hover{border-color:var(--accent3);color:var(--accent3)}
+.hero-stats{display:flex;gap:clamp(24px,5vw,48px);justify-content:center;margin-top:48px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-family:var(--font2);font-size:clamp(24px,4vw,36px);font-weight:700;color:var(--text)}
+.stat-num span{background:linear-gradient(135deg,var(--accent3),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:12px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
+
+/* ───── SECTIONS ───── */
+.section{padding:clamp(40px,6vw,80px) clamp(1rem,5vw,3rem)}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.section-label{font-size:11px;font-weight:600;color:var(--accent3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.section-title{font-family:var(--font2);font-size:clamp(20px,3vw,26px);font-weight:700;display:flex;align-items:center;gap:10px}
+.section-title i{color:var(--accent)}
+.see-all{background:none;border:1.5px solid var(--border2);color:var(--muted);padding:6px 16px;border-radius:16px;font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.see-all:hover{border-color:var(--accent3);color:var(--accent3)}
+.divider{height:1px;background:var(--border);margin:0 clamp(1rem,5vw,3rem)}
+
+/* ───── ANIME GRID ───── */
+.anime-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:18px}
+@media(max-width:480px){.anime-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}}
+
+.anime-card{background:var(--card);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform .25s,border-color .25s,box-shadow .25s;position:relative}
+.anime-card:hover{transform:translateY(-6px);border-color:rgba(108,99,255,.4);box-shadow:0 16px 40px rgba(0,0,0,.5)}
+.card-thumb{aspect-ratio:2/3;background:var(--card2);position:relative;overflow:hidden}
+.card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.anime-card:hover .card-thumb img{transform:scale(1.06)}
+.card-thumb-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--dim);font-size:12px;text-align:center;padding:12px}
+.card-thumb-placeholder i{font-size:36px;color:var(--accent);opacity:.4}
+.play-over{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s}
+.anime-card:hover .play-over{opacity:1}
+.play-ring{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--pink));border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px var(--glow)}
+.play-ring i{font-size:22px;color:#fff;margin-left:3px}
+.card-badges{position:absolute;top:8px;left:8px;display:flex;flex-direction:column;gap:4px}
+.cbadge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px}
+.cbadge-hd{background:rgba(6,182,212,.85);color:#fff}
+.cbadge-new{background:rgba(236,72,153,.85);color:#fff}
+.cbadge-ep{background:rgba(108,99,255,.85);color:#fff}
+.card-del{position:absolute;top:8px;right:8px;background:rgba(239,68,68,.85);border:none;border-radius:6px;padding:4px 7px;cursor:pointer;color:#fff;font-size:12px;opacity:0;transition:opacity .2s;display:flex;align-items:center}
+.anime-card:hover .card-del{opacity:1}
+.card-info{padding:12px}
+.card-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-meta{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.dot{width:3px;height:3px;border-radius:50%;background:var(--dim);display:inline-block}
+
+/* ───── GENRE GRID ───── */
+.genre-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
+.genre-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 16px;text-align:center;cursor:pointer;transition:all .25s}
+.genre-card:hover{border-color:rgba(108,99,255,.4);background:rgba(108,99,255,.08);transform:translateY(-3px)}
+.genre-card i{font-size:28px;margin-bottom:8px;background:linear-gradient(135deg,var(--accent3),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.genre-card p{font-size:13px;font-weight:500;color:var(--muted)}
+.genre-card:hover p{color:var(--text)}
+
+/* ───── PLAYER ───── */
+.player-layout{display:grid;grid-template-columns:1fr 320px;gap:24px;max-width:1200px;margin:0 auto;padding:28px clamp(1rem,4vw,2.5rem)}
+@media(max-width:900px){.player-layout{grid-template-columns:1fr}}
+.video-wrap{background:#000;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:16/9;border:1px solid var(--border)}
+.video-wrap video{width:100%;height:100%;display:block}
+.video-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted)}
+.video-placeholder i{font-size:64px;color:var(--accent);opacity:.3}
+.video-placeholder p{font-size:14px}
+.player-sidebar{}
+.sidebar-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;margin-bottom:16px}
+.sidebar-title{font-family:var(--font2);font-size:15px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sidebar-title i{color:var(--accent);font-size:18px}
+.ep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:8px}
+.ep-btn{background:var(--card2);border:1.5px solid var(--border);color:var(--muted);border-radius:8px;padding:8px 6px;cursor:pointer;font-size:12px;font-weight:600;transition:all .2s;text-align:center}
+.ep-btn:hover,.ep-btn.active{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+.player-meta-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-top:16px}
+.player-title{font-family:var(--font2);font-size:clamp(18px,2.5vw,22px);font-weight:700;margin-bottom:10px}
+.player-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ptag{font-size:12px;padding:4px 12px;border-radius:20px;background:rgba(108,99,255,.15);color:var(--accent3);border:1px solid rgba(108,99,255,.25)}
+.player-desc{color:var(--muted);font-size:14px;line-height:1.7}
+.back-bar{display:flex;align-items:center;gap:12px;padding:14px clamp(1rem,4vw,2.5rem);background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.back-btn{background:none;border:1.5px solid var(--border2);color:var(--text);padding:7px 18px;border-radius:20px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:6px;transition:all .2s}
+.back-btn:hover{border-color:var(--accent3);color:var(--accent3)}
+.back-bar h2{font-size:15px;font-weight:600;color:var(--muted)}
+
+/* ───── UPLOAD MODAL ───── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px)}
+.overlay.open{display:flex}
+.modal{background:var(--card);border-radius:var(--radius-xl);border:1px solid var(--border2);width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
+.modal-hd{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border)}
+.modal-hd h3{font-family:var(--font2);font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px}
+.modal-hd h3 i{color:var(--accent)}
+.modal-close{background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;line-height:1;transition:color .2s}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:24px}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:7px}
+.field input,.field textarea,.field select{width:100%;background:var(--surface);border:1.5px solid var(--border2);border-radius:var(--radius);padding:11px 14px;color:var(--text);font-size:14px;outline:none;transition:border-color .2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent)}
+.field textarea{min-height:90px;resize:vertical;line-height:1.5}
+.field select option{background:var(--card)}
+.drop-zone{border:2px dashed var(--dim);border-radius:var(--radius);padding:30px;text-align:center;cursor:pointer;transition:all .25s;position:relative}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--accent);background:rgba(108,99,255,.06)}
+.drop-zone i{font-size:36px;color:var(--accent);opacity:.5;margin-bottom:8px}
+.drop-zone p{color:var(--muted);font-size:13px}
+.drop-zone span{color:var(--accent);font-weight:600}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.file-pill{margin-top:10px;background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.25);border-radius:8px;padding:9px 14px;display:none;align-items:center;gap:8px}
+.file-pill i{color:var(--accent)}
+.file-pill span{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.ep-rows{display:flex;flex-direction:column;gap:10px}
+.ep-row{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px}
+.ep-row-label{font-size:12px;color:var(--muted);min-width:60px;font-weight:600}
+.ep-row-name{font-size:12px;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ep-pick{background:none;border:1.5px solid var(--border2);color:var(--accent3);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:11px;font-weight:600;transition:all .2s;white-space:nowrap}
+.ep-pick:hover{background:rgba(108,99,255,.1)}
+.ep-del-btn{background:none;border:none;color:var(--dim);font-size:16px;cursor:pointer;line-height:1;transition:color .2s}
+.ep-del-btn:hover{color:#ef4444}
+.add-ep{display:flex;align-items:center;justify-content:center;gap:6px;background:none;border:1.5px dashed var(--dim);color:var(--muted);border-radius:8px;padding:9px;cursor:pointer;font-size:13px;width:100%;transition:all .2s}
+.add-ep:hover{border-color:var(--accent);color:var(--accent)}
+.modal-ft{display:flex;gap:10px;justify-content:flex-end;padding:16px 24px;border-top:1px solid var(--border)}
+.btn-cancel{background:none;border:1.5px solid var(--border2);color:var(--muted);padding:9px 22px;border-radius:20px;cursor:pointer;font-size:13px;transition:all .2s}
+.btn-cancel:hover{color:var(--text);border-color:var(--text)}
+.btn-save{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:9px 26px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s}
+.btn-save:hover{opacity:.88}
+
+/* ───── TOAST ───── */
+.toast{position:fixed;bottom:28px;right:28px;background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:12px 20px;border-radius:12px;font-size:14px;display:none;align-items:center;gap:10px;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,.5);animation:slideIn .3s ease}
+@keyframes slideIn{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+.toast.show{display:flex}
+.toast i{font-size:18px}
+.toast.success i{color:#22c55e}
+.toast.error i{color:#ef4444}
+.toast.info i{color:var(--accent3)}
+
+/* ───── ABOUT PAGE ───── */
+.about-hero{background:linear-gradient(135deg,rgba(108,99,255,.12),rgba(236,72,153,.08));border-bottom:1px solid var(--border);padding:clamp(48px,8vw,100px) clamp(1rem,5vw,3rem);text-align:center}
+.about-hero h1{font-family:var(--font2);font-size:clamp(28px,5vw,52px);font-weight:700;margin-bottom:16px}
+.about-hero h1 span{background:linear-gradient(135deg,var(--accent3),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.about-hero p{color:var(--muted);font-size:clamp(15px,2vw,18px);max-width:600px;margin:0 auto}
+.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.about-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 24px}
+.about-card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px}
+.about-card-icon.purple{background:rgba(108,99,255,.15);color:var(--accent3)}
+.about-card-icon.pink{background:rgba(236,72,153,.15);color:var(--pink)}
+.about-card-icon.cyan{background:rgba(6,182,212,.15);color:var(--cyan)}
+.about-card-icon.gold{background:rgba(245,158,11,.15);color:var(--gold)}
+.about-card h3{font-family:var(--font2);font-size:16px;font-weight:600;margin-bottom:10px}
+.about-card p{font-size:14px;color:var(--muted);line-height:1.7}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;text-align:center}
+.team-avatar{width:72px;height:72px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-family:var(--font2);font-size:22px;font-weight:700;border:2px solid var(--border2)}
+.team-avatar.a{background:linear-gradient(135deg,#6c63ff,#a78bfa);color:#fff}
+.team-avatar.b{background:linear-gradient(135deg,#ec4899,#f59e0b);color:#fff}
+.team-avatar.c{background:linear-gradient(135deg,#06b6d4,#22c55e);color:#fff}
+.team-avatar.d{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff}
+.team-name{font-weight:600;font-size:15px;margin-bottom:4px}
+.team-role{font-size:12px;color:var(--muted)}
+
+/* ───── CONTACT PAGE ───── */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1000px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(1rem,5vw,3rem)}
+@media(max-width:680px){.contact-layout{grid-template-columns:1fr}}
+.contact-info h2{font-family:var(--font2);font-size:clamp(22px,4vw,32px);font-weight:700;margin-bottom:14px}
+.contact-info h2 span{background:linear-gradient(135deg,var(--accent3),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.contact-info p{color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:28px}
+.contact-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.contact-item-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.contact-item-icon.purple{background:rgba(108,99,255,.15);color:var(--accent3)}
+.contact-item-icon.pink{background:rgba(236,72,153,.15);color:var(--pink)}
+.contact-item-icon.cyan{background:rgba(6,182,212,.15);color:var(--cyan)}
+.contact-item h4{font-size:13px;font-weight:600;margin-bottom:3px}
+.contact-item p{font-size:13px;color:var(--muted);margin:0;line-height:1.4}
+.contact-form-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:28px}
+.contact-form-box h3{font-family:var(--font2);font-size:18px;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.contact-form-box h3 i{color:var(--accent)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:7px}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--surface);border:1.5px solid var(--border2);border-radius:var(--radius);padding:11px 14px;color:var(--text);font-size:14px;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--accent)}
+.form-group textarea{min-height:110px;resize:vertical;line-height:1.5}
+.form-group select option{background:var(--card)}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:13px;border-radius:20px;font-size:15px;font-weight:600;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px}
+.submit-btn:hover{opacity:.88;transform:translateY(-1px)}
+.form-success{display:none;text-align:center;padding:32px 20px}
+.form-success i{font-size:56px;color:#22c55e;margin-bottom:12px}
+.form-success h3{font-size:20px;font-weight:600;margin-bottom:8px}
+.form-success p{color:var(--muted);font-size:14px}
+
+/* ───── PRIVACY PAGE ───── */
+.legal-wrap{max-width:800px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(1rem,5vw,3rem)}
+.legal-hero{margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+.legal-hero h1{font-family:var(--font2);font-size:clamp(26px,5vw,42px);font-weight:700;margin-bottom:12px}
+.legal-hero h1 span{background:linear-gradient(135deg,var(--accent3),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.legal-hero p{color:var(--muted);font-size:14px}
+.legal-toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:36px}
+.legal-toc h4{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.legal-toc ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.legal-toc a{font-size:14px;color:var(--accent3);transition:color .2s}
+.legal-toc a:hover{color:var(--text)}
+.legal-section{margin-bottom:40px}
+.legal-section h2{font-family:var(--font2);font-size:clamp(18px,2.5vw,22px);font-weight:600;margin-bottom:14px;padding-top:8px}
+.legal-section p{color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:14px}
+.legal-section ul{margin:0 0 14px 20px;display:flex;flex-direction:column;gap:7px}
+.legal-section ul li{color:var(--muted);font-size:15px;line-height:1.7}
+.legal-highlight{background:rgba(108,99,255,.08);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0}
+.legal-highlight p{margin:0;color:var(--text)}
+
+/* ───── FEATURES STRIP ───── */
+.features-strip{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:clamp(32px,5vw,60px) clamp(1rem,5vw,3rem)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;max-width:1200px;margin:0 auto}
+.feature{display:flex;align-items:flex-start;gap:14px}
+.feature-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.feature h4{font-size:15px;font-weight:600;margin-bottom:4px}
+.feature p{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ───── FOOTER ───── */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:clamp(40px,6vw,64px) clamp(1rem,5vw,3rem) 24px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr}}
+.footer-brand .logo{margin-bottom:14px;display:flex}
+.footer-brand p{font-size:14px;color:var(--muted);line-height:1.7;max-width:280px;margin-bottom:18px}
+.footer-social{display:flex;gap:10px}
+.social-btn{width:36px;height:36px;border-radius:9px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:var(--muted);font-size:17px}
+.social-btn:hover{border-color:var(--accent3);color:var(--accent3)}
+.footer-col h5{font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+.footer-links{display:flex;flex-direction:column;gap:8px}
+.footer-links a,.footer-links button{font-size:14px;color:var(--muted);background:none;border:none;cursor:pointer;text-align:left;padding:0;transition:color .2s}
+.footer-links a:hover,.footer-links button:hover{color:var(--accent3)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:13px;color:var(--dim)}
+.footer-badges{display:flex;gap:8px;flex-wrap:wrap}
+.fbadge{font-size:11px;color:var(--dim);background:var(--card);border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+
+/* ───── EMPTY ───── */
+.empty-state{text-align:center;padding:clamp(40px,8vw,80px) 20px;color:var(--muted)}
+.empty-state i{font-size:64px;opacity:.25;margin-bottom:16px;color:var(--accent)}
+.empty-state h3{font-size:18px;font-weight:600;color:var(--text);margin-bottom:8px}
+.empty-state p{font-size:14px;margin-bottom:20px}
+
+/* ───── SEARCH BAR ───── */
+.search-bar{display:flex;align-items:center;gap:0;background:var(--card);border:1.5px solid var(--border2);border-radius:24px;overflow:hidden;max-width:500px;width:100%}
+.search-bar i{padding:0 14px;color:var(--dim);font-size:18px;flex-shrink:0}
+.search-bar input{flex:1;background:none;border:none;color:var(--text);font-size:14px;padding:11px 0;outline:none}
+.search-bar input::placeholder{color:var(--dim)}
+
+/* ───── RESPONSIVE NAV UTILS ───── */
+@media(max-width:768px){
+  .nav-center{display:none}
+  .hamburger{display:flex;align-items:center;justify-content:center}
+  .btn-upload span{display:none}
+}
+@media(max-width:500px){
+  .hero-stats{gap:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAVIGATION ══════════ -->
+<nav id="main-nav">
+  <div class="logo" onclick="navTo('home')">
+    <div class="logo-icon"><i class="ti ti-player-play-filled"></i></div>
+    <span class="logo-text">ANI ONE IN INDIA</span>
+  </div>
+
+  <div class="nav-center">
+    <button class="nav-link active" id="nl-home" onclick="navTo('home')"><i class="ti ti-home"></i> Home</button>
+    <button class="nav-link" id="nl-library" onclick="navTo('library')"><i class="ti ti-books"></i> Library</button>
+    <button class="nav-link" id="nl-genres" onclick="navTo('genres')"><i class="ti ti-category"></i> Genres</button>
+    <button class="nav-link" id="nl-about" onclick="navTo('about')"><i class="ti ti-info-circle"></i> About</button>
+    <button class="nav-link" id="nl-contact" onclick="navTo('contact')"><i class="ti ti-mail"></i> Contact</button>
+  </div>
+
+  <div class="nav-right">
+    <button class="btn-upload" onclick="openModal()"><i class="ti ti-upload"></i><span> Upload</span></button>
+    <button class="hamburger" onclick="toggleMobile()"><i class="ti ti-menu-2"></i></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <button class="nav-link" onclick="navTo('home');closeMobile()"><i class="ti ti-home"></i> Home</button>
+  <button class="nav-link" onclick="navTo('library');closeMobile()"><i class="ti ti-books"></i> Library</button>
+  <button class="nav-link" onclick="navTo('genres');closeMobile()"><i class="ti ti-category"></i> Genres</button>
+  <button class="nav-link" onclick="navTo('about');closeMobile()"><i class="ti ti-info-circle"></i> About Us</button>
+  <button class="nav-link" onclick="navTo('contact');closeMobile()"><i class="ti ti-mail"></i> Contact</button>
+  <button class="nav-link" onclick="navTo('privacy');closeMobile()"><i class="ti ti-shield"></i> Privacy Policy</button>
+  <button class="nav-link" onclick="openModal();closeMobile()"><i class="ti ti-upload"></i> Upload Anime</button>
+</div>
+
+<!-- ══════════ HOME PAGE ══════════ -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="orb orb3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge"><i class="ti ti-sparkles"></i> Free Streaming — No Ads</div>
+      <h1>Watch Anime<br/><span>Without Limits</span></h1>
+      <p>Upload your own collection and stream any anime, any time, on any device — all in one beautiful player.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="openModal()"><i class="ti ti-upload"></i><CENTER>Upload Anime</button>
+        <button class="btn-ghost" onclick="navTo('library')"><i class="ti ti-books"></i> Browse Library</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num" id="stat-count"><span>0</span></div><div class="stat-label">Anime Uploaded</div></div>
+        <div class="stat"><div class="stat-num" id="stat-eps"><span>0</span></div><div class="stat-label">Total Episodes</div></div>
+        <div class="stat"><div class="stat-num"><span>HD</span></div><div class="stat-label">Video Quality</div></div>
+        <div class="stat"><div class="stat-num"><span>∞</span></div><div class="stat-label">Free Forever</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <div class="features-strip">
+    <div class="features-grid">
+      <div class="feature"><div class="feature-icon" style="background:rgba(108,99,255,.15);color:var(--accent3)"><i class="ti ti-upload"></i></div><div><h4>Easy Upload</h4><p>Drop any video file and it's ready to stream instantly.</p></div></div>
+      <div class="feature"><div class="feature-icon" style="background:rgba(236,72,153,.15);color:var(--pink)"><i class="ti ti-device-mobile"></i></div><div><h4>Fully Responsive</h4><p>Works perfectly on phone, tablet, and desktop.</p></div></div>
+      <div class="feature"><div class="feature-icon" style="background:rgba(6,182,212,.15);color:var(--cyan)"><i class="ti ti-list"></i></div><div><h4>Episode Lists</h4><p>Organize series by episode and jump to any one instantly.</p></div></div>
+      <div class="feature"><div class="feature-icon" style="background:rgba(245,158,11,.15);color:var(--gold)"><i class="ti ti-category"></i></div><div><h4>Genre Browsing</h4><p>Filter by genre to find exactly what you're in the mood for.</p></div></div>
+    </div>
+  </div>
+
+  <!-- Recently Added -->
+  <div class="section">
+    <div class="section-head">
+      <div><div class="section-label">Fresh Uploads</div><div class="section-title"><i class="ti ti-flame"></i> Recently Added</div></div>
+      <button class="see-all" onclick="navTo('library')">View all →</button>
+    </div>
+    <div class="anime-grid" id="recent-grid"></div>
+    <div id="recent-empty" class="empty-state" style="display:none">
+      <i class="ti ti-movie-off"></i>
+      <h3>No anime yet</h3>
+      <p>Upload your first anime to get started.</p>
+      <button class="btn-primary" onclick="openModal()"><i class="ti ti-plus"></i> Upload Now</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Genre Quick Pick -->
+  <div class="section">
+    <div class="section-head">
+      <div><div class="section-label">Explore</div><div class="section-title"><i class="ti ti-category"></i> Browse by Genre</div></div>
+      <button class="see-all" onclick="navTo('genres')">All genres →</button>
+    </div>
+    <div class="genre-grid" id="home-genre-grid"></div>
+  </div>
+</div>
+
+<!-- ══════════ LIBRARY PAGE ══════════ -->
+<div id="page-library" class="page">
+  <div class="section">
+    <div class="section-head">
+      <div><div class="section-label">Your Collection</div><div class="section-title"><i class="ti ti-books"></i> Full Library</div></div>
+      <button class="btn-upload" onclick="openModal()"><i class="ti ti-plus"></i> Add Anime</button>
+    </div>
+    <div style="margin-bottom:20px">
+      <div class="search-bar"><i class="ti ti-search"></i><input id="lib-search" type="text" placeholder="Search anime titles…" oninput="renderLibrary()"/></div>
+    </div>
+    <div class="anime-grid" id="library-grid"></div>
+    <div id="library-empty" class="empty-state" style="display:none">
+      <i class="ti ti-database-off"></i>
+      <h3>Library is empty</h3>
+      <p>Upload your anime collection to fill this shelf.</p>
+      <button class="btn-primary" onclick="openModal()"><i class="ti ti-upload"></i> Upload Anime</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ GENRES PAGE ══════════ -->
+<div id="page-genres" class="page">
+  <div class="section">
+    <div class="section-head">
+      <div><div class="section-label">Discover</div><div class="section-title"><i class="ti ti-category"></i> All Genres</div></div>
+    </div>
+    <div class="genre-grid" id="all-genre-grid"></div>
+    <div id="genre-results" style="display:none;margin-top:36px">
+      <div class="section-head">
+        <div class="section-title" id="genre-res-title"></div>
+        <button class="see-all" onclick="clearGenreFilter()">Clear ×</button>
+      </div>
+      <div class="anime-grid" id="genre-res-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PLAYER PAGE ══════════ -->
+<div id="page-player" class="page">
+  <div class="back-bar">
+    <button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left"></i> Back</button>
+    <h2 id="player-nav-title">Now Playing</h2>
+  </div>
+  <div class="player-layout">
+    <div>
+      <div class="video-wrap" id="video-wrap">
+        <div class="video-placeholder"><i class="ti ti-player-play"></i><p>Select an episode below</p></div>
+      </div>
+      <div class="player-meta-box" style="margin-top:20px">
+        <div class="player-title" id="player-title"></div>
+        <div class="player-tags" id="player-tags"></div>
+        <div class="player-desc" id="player-desc"></div>
+      </div>
+    </div>
+    <div class="player-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title"><i class="ti ti-list"></i> Episodes</div>
+        <div class="ep-grid" id="ep-grid"></div>
+        <div style="margin-top:14px">
+          <button class="add-ep" onclick="addEpToPlaying()"><i class="ti ti-plus"></i> Add Episode</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ ABOUT PAGE ══════════ -->
+<div id="page-about" class="page">
+  <div class="about-hero">
+    <h1>About <span>ANI ONE IN INDIA</span></h1>
+    <p>We built ANI ONE IN INDIA  because we believe every anime fan deserves a clean, fast, and beautiful way to watch their favourite shows — without the clutter.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div><div class="section-label">Our Mission</div><div class="section-title"><i class="ti ti-target"></i> What We Stand For</div></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-card-icon purple"><i class="ti ti-heart"></i></div>
+        <h3>Built for Fans</h3>
+        <p>ANI ONE IN INDIA was created by anime lovers, for anime lovers. Every design decision starts with one question: does this make watching better?</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon pink"><i class="ti ti-lock-open"></i></div>
+        <h3>Free & Open</h3>
+        <p>No subscriptions, no paywalls, no ads. Upload your own collection and also watch other anime uploaded byother fans you can stream it anywhere, on any device, completely free.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon cyan"><i class="ti ti-shield-check"></i></div>
+        <h3>Privacy First</h3>
+        <p>Your data stays yours. We don't sell your information or track your watch history beyond what's needed to resume playback.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon gold"><i class="ti ti-device-mobile"></i></div>
+        <h3>Every Screen</h3>
+        <p>From a 4K monitor to a 5-inch phone screen, ANI ONE IN INDIA adapts beautifully. Watch wherever the mood strikes you.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-head">
+      <div><div class="section-label">The Story</div><div class="section-title"><i class="ti ti-book"></i> How We Started</div></div>
+    </div>
+    <div style="max-width:720px">
+      <p style="color:var(--muted);font-size:16px;line-height:1.9;margin-bottom:16px">ANI ONE IN INDIA began in 2026 as a small side project — a personal media player that a group of developers built to manage their local anime collection. As word spread through the community, it grew into the platform you see today.</p>
+      <p style="color:var(--muted);font-size:16px;line-height:1.9;margin-bottom:16px">We noticed that most anime platforms were either cluttered with ads, locked behind expensive subscriptions, or simply didn't work well on mobile. We wanted something different: a platform that felt as beautiful as the anime it served.</p>
+      <p style="color:var(--muted);font-size:16px;line-height:1.9">Today ANI ONE IN INDIA i hope is used by thousands of fans globally. We're still a small, passionate team — and we intend to stay that way, so we can keep making decisions that put fans first.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-head">
+      <div><div class="section-label">The People</div><div class="section-title"><i class="ti ti-users"></i> Meet the Team</div></div>
+    </div>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-avatar a">AS</div><div class="team-name">ADARSH SAHANI</div><div class="team-role">Founder & CEO</div></div>
+      <div class="team-card"><div class="team-avatar b">VLS</div><div class="team-name">VIHARI LAL SAHANI</div><div class="team-role">Head of Design</div></div>
+      <div class="team-card"><div class="team-avatar c">AS</div><div class="team-name">ADARSH SAHANI</div><div class="team-role">Lead Engineer</div></div>
+      <div class="team-card"><div class="team-avatar d">AS</div><div class="team-name">ADARSH SAHANI</div><div class="team-role">Community Manager</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <div class="section" style="text-align:center">
+    <div class="hero-badge" style="display:inline-flex;margin-bottom:16px"><i class="ti ti-sparkles"></i> Join the Community</div>
+    <h2 style="font-family:var(--font2);font-size:clamp(24px,4vw,36px);font-weight:700;margin-bottom:12px">Ready to start watching?</h2>
+    <p style="color:var(--muted);margin-bottom:24px;font-size:15px">Upload your first anime and build your personal streaming library in minutes.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn-primary" onclick="openModal()"><i class="ti ti-upload"></i> Upload Anime</button>
+      <button class="btn-ghost" onclick="navTo('contact')"><i class="ti ti-mail"></i> Contact Us</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CONTACT PAGE ══════════ -->
+<div id="page-contact" class="page">
+  <div style="background:linear-gradient(135deg,rgba(108,99,255,.12),rgba(6,182,212,.08));border-bottom:1px solid var(--border);padding:clamp(40px,7vw,80px) clamp(1rem,5vw,3rem);text-align:center">
+    <h1 style="font-family:var(--font2);font-size:clamp(28px,5vw,48px);font-weight:700;margin-bottom:14px">Get in <span style="background:linear-gradient(135deg,var(--accent3),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Touch</span></h1>
+    <p style="color:var(--muted);font-size:clamp(14px,2vw,17px);max-width:500px;margin:0 auto">Have a question, feedback, or just want to say hi? We love to hear from you.</p>
+  </div>
+
+  <div class="contact-layout">
+    <div class="contact-info">
+      <h2>Let's <span>talk</span></h2>
+      <p>We typically respond within 24 hours on weekdays. Fill out the form and we'll get back to you as soon as possible.</p>
+
+      <div class="contact-item">
+        <div class="contact-item-icon purple"><i class="ti ti-mail"></i></div>
+        <div><h4>Email Us</h4><p>anioneinindia8private@gmail.com</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon pink"><i class="ti ti-brand-telegram"></i></div>
+        <div><h4>telegram Community</h4><p>Join fans on our<br/>official telegram group</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon cyan"><i class="ti ti-clock"></i></div>
+        <div><h4>Support Hours</h4><p>Monday – Friday<br/>9:00 AM – 6:00 PM IST</p></div>
+      </div>
+
+      <div style="margin-top:24px;background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);border-radius:var(--radius);padding:18px">
+        <p style="font-size:13px;color:var(--muted);line-height:1.7"><i class="ti ti-bulb" style="color:var(--gold);vertical-align:-2px"></i> <strong style="color:var(--text)">Quick tip:</strong> For bug reports, please include your browser name, version, and a description of what went wrong. It helps us fix things faster!</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="contact-form-box">
+        <h3><i class="ti ti-send"></i> Send a Message</h3>
+        <div id="contact-form">
+          <div class="form-row">
+            <div class="form-group"><label>First Name *</label><input id="cf-fname" type="text" placeholder="Rohan"/></div>
+            <div class="form-group"><label>Last Name *</label><input id="cf-lname" type="text" placeholder="Kapoor"/></div>
+          </div>
+          <div class="form-group"><label>Email Address *</label><input id="cf-email" type="email" placeholder="you@example.com"/></div>
+          <div class="form-group">
+            <label>Subject *</label>
+            <select id="cf-subject">
+              <option value="">— Select a topic —</option>
+              <option>Bug Report</option>
+              <option>Feature Request</option>
+              <option>General Question</option>
+              <option>Copyright / DMCA</option>
+              <option>Partnership</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Message *</label><textarea id="cf-msg" placeholder="Tell us what's on your mind…"></textarea></div>
+          <button class="submit-btn" onclick="submitContact(anioneinindia8private@gmail.com)"><i class="ti ti-send"></i> Send Message</button>
+        </div>
+        <div class="form-success" id="contact-success">
+          <i class="ti ti-circle-check" style="display:block"></i>
+          <h3>Message Sent!</h3>
+          <p>Thanks for reaching out. We'll reply to your email within 24 hours.</p>
+          <button class="btn-ghost" style="margin:16px auto 0;display:flex" onclick="resetContact()"><i class="ti ti-refresh"></i> Send Another</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section" style="max-width:800px;margin:0 auto">
+    <div class="section-head">
+      <div><div class="section-label">Help</div><div class="section-title"><i class="ti ti-help"></i> Frequently Asked Questions</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px" id="faq-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ PRIVACY POLICY PAGE ══════════ -->
+<div id="page-privacy" class="page">
+  <div class="legal-wrap">
+    <div class="legal-hero">
+      <div class="hero-badge" style="display:inline-flex;margin-bottom:16px"><i class="ti ti-shield-check"></i> Legal</div>
+      <h1>Privacy <span>Policy</span></h1>
+      <p style="color:var(--muted);font-size:14px">Last updated: June 1, 2025 &nbsp;·&nbsp; Effective: June 1, 2025</p>
+    </div>
+
+    <div class="legal-toc">
+      <h4>Table of Contents</h4>
+      <ul>
+        <li><a href="#priv-1">1. Information We Collect</a></li>
+        <li><a href="#priv-2">2. How We Use Your Information</a></li>
+        <li><a href="#priv-3">3. Data Storage & Security</a></li>
+        <li><a href="#priv-4">4. Cookies & Local Storage</a></li>
+        <li><a href="#priv-5">5. Third-Party Services</a></li>
+        <li><a href="#priv-6">6. Your Rights</a></li>
+        <li><a href="#priv-7">7. Children's Privacy</a></li>
+        <li><a href="#priv-8">8. Changes to This Policy</a></li>
+        <li><a href="#priv-9">9. Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div class="legal-highlight"><p><i class="ti ti-info-circle" style="color:var(--accent3)"></i> <strong>Short version:</strong> ANI ONE IN INDIA stores your uploaded anime data locally in your browser. We don't collect personal information, sell your data, or run ads. This policy explains the full details.</p></div>
+
+    <div class="legal-section" id="priv-1">
+      <h2>1. Information We Collect</h2>
+      <p>ANI ONE IN INDIA is designed with privacy in mind. We collect minimal information necessary to provide the service:</p>
+      <ul>
+        <li><strong>Uploaded Content:</strong> Video files, images, and metadata (title, genre, description) you upload are stored locally in your browser's localStorage. They never leave your device.</li>
+        <li><strong>Usage Data:</strong> We may collect anonymous, aggregated analytics data such as page views and feature usage to improve the platform. This data cannot identify you personally.</li>
+        <li><strong>Contact Form Data:</strong> If you contact us via our contact form, we collect your name, email address, and message content to respond to your inquiry.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section" id="priv-2">
+      <h2>2. How We Use Your Information</h2>
+      <p>We use the information we collect for the following purposes:</p>
+      <ul>
+        <li>To provide and maintain the ANI ONE IN INDIA platform and its features</li>
+        <li>To respond to your support requests and inquiries</li>
+        <li>To improve user experience based on anonymous usage patterns</li>
+        <li>To detect and prevent technical issues and abuse</li>
+        <li>To comply with legal obligations where required</li>
+      </ul>
+      <div class="legal-highlight"><p>We <strong>never</strong> sell, rent, or share your personal information with third parties for marketing purposes.</p></div>
+    </div>
+
+    <div class="legal-section" id="priv-3">
+      <h2>3. Data Storage & Security</h2>
+      <p>All anime uploads, watch history, and preferences are stored exclusively in your browser's localStorage. This means:</p>
+      <ul>
+        <li>Your content stays on your device and is never transmitted to our servers</li>
+        <li>Clearing your browser data will remove your ANI ONE IN INDIA library</li>
+        <li>Other devices or browsers cannot access your library unless you export and import it</li>
+      </ul>
+      <p>We implement industry-standard security measures to protect any data that does pass through our servers (e.g., contact form submissions), including encrypted HTTPS connections and secure server infrastructure.</p>
+    </div>
+
+    <div class="legal-section" id="priv-4">
+      <h2>4. Cookies & Local Storage</h2>
+      <p>ANI ONE IN INDIA uses browser localStorage (not traditional cookies) to store your anime library and app preferences. We do not use tracking cookies or third-party advertising cookies.</p>
+      <p>You can clear your browser's localStorage at any time through your browser settings. Note that this will delete your ANI ONE IN INDIA library data.</p>
+    </div>
+
+    <div class="legal-section" id="priv-5">
+      <h2>5. Third-Party Services</h2>
+      <p>ANI ONE IN INDIA may use the following third-party services, each governed by their own privacy policies:</p>
+      <ul>
+        <li><strong>Google Fonts:</strong> We load web fonts from Google's servers. Google may collect font request data. See <a href="https://policies.google.com/privacy" style="color:var(--accent3)">Google Privacy Policy</a>.</li>
+        <li><strong>jsDelivr CDN:</strong> We load icon libraries from jsDelivr. See their privacy policy at jsdelivr.com.</li>
+      </ul>
+      <p>We do not integrate any advertising networks, social media trackers, or analytics platforms that collect personally identifiable information.</p>
+    </div>
+
+    <div class="legal-section" id="priv-6">
+      <h2>6. Your Rights</h2>
+      <p>Depending on your jurisdiction, you may have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Right to Access:</strong> You can request a copy of any personal data we hold about you.</li>
+        <li><strong>Right to Deletion:</strong> You can request that we delete your personal data from our systems.</li>
+        <li><strong>Right to Correction:</strong> You can request that we correct inaccurate personal data.</li>
+        <li><strong>Right to Portability:</strong> You can request your data in a portable format.</li>
+        <li><strong>Right to Object:</strong> You can object to our processing of your personal data.</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="#" style="color:var(--accent3)">privacy@anioneinindia.io</a>.</p>
+    </div>
+
+    <div class="legal-section" id="priv-7">
+      <h2>7. Children's Privacy</h2>
+      <p>ANI ONE IN INDIA is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately so we can delete it.</p>
+    </div>
+
+    <div class="legal-section" id="priv-8">
+      <h2>8. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by posting a prominent notice on our website and updating the "Last updated" date at the top of this page. We encourage you to review this policy periodically.</p>
+      <p>Your continued use of ANI ONE IN INDIA after changes become effective constitutes your acceptance of the revised policy.</p>
+    </div>
+
+    <div class="legal-section" id="priv-9">
+      <h2>9. Contact Us</h2>
+      <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
+      <ul>
+        <li><strong>Email:</strong>anioneinindia8private@gmail.com</li>
+        <li><strong>General Support:</strong>anioneinindia8private@gmail.com</li>
+        <li><strong>Response Time:</strong> Within 72 hours on business days</li>
+      </ul>
+      <div style="margin-top:20px">
+        <button class="btn-primary" onclick="navTo('contact')"><i class="ti ti-mail"></i> Go to Contact Page</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo" style="cursor:default">
+        <div class="logo-icon"><i class="ti ti-player-play-filled"></i></div>
+        <span class="logo-text">ANI ONE IN INDIA</span>
+      </div>
+      <p>Your personal anime streaming library. Upload, organise, and watch — beautifully, for free.</p>
+      <div class="footer-social">
+        <div class="social-btn" title="instagram"><i class="ti ti-brand-instagram"></i></div>
+        <div class="social-btn" title="Discord"><i class="ti ti-brand-discord"></i></div>
+        <div class="social-btn" title="Reddit"><i class="ti ti-brand-reddit"></i></div>
+        <div class="social-btn" title="telegram"><i class="ti ti-brand-telegram"></i></div>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <div class="footer-links">
+        <button onclick="navTo('home')">Home</button>
+        <button onclick="navTo('library')">Library</button>
+        <button onclick="navTo('genres')">Genres</button>
+        <button onclick="openModal()">Upload Anime</button>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h5>Company</h5>
+      <div class="footer-links">
+        <button onclick="navTo('about')">About Us</button>
+        <button onclick="navTo('contact')">Contact</button>
+        <a href="#">Blog</a>
+        <a href="#">Careers</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <div class="footer-links">
+        <button onclick="navTo('privacy')">Privacy Policy</button>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">DMCA</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026. all right of this website reserved to ANI ONE IN INDIA  <i class="ti ti-heart-filled" style="color:var(--pink);vertical-align:-2px"></i> ADARSH SAHANI</p>
+    <div class="footer-badges">
+      <span class="fbadge">🔒 Privacy First</span>
+      <span class="fbadge">📱 Responsive</span>
+      <span class="fbadge">⚡ Fast</span>
+      <span class="fbadge">🆓 Free</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════ UPLOAD MODAL ══════════ -->
+<div class="overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-hd">
+      <h3><i class="ti ti-upload"></i> Upload New Anime</h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Anime Title *</label>
+        <input id="inp-title" type="text" placeholder="e.g. Demon Slayer"/>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="field">
+          <label>Genre</label>
+          <select id="inp-genre">
+            <option>Action</option><option>Adventure</option><option>Comedy</option>
+            <option>Drama</option><option>Fantasy</option><option>Horror</option>
+            <option>Mecha</option><option>Mystery</option><option>Romance</option>
+            <option>Sci-Fi</option><option>Slice of Life</option><option>Sports</option>
+            <option>Supernatural</option><option>Thriller</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="inp-status">
+            <option>Ongoing</option><option>Completed</option><option>Upcoming</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <textarea id="inp-desc" placeholder="Short synopsis…"></textarea>
+      </div>
+      <div class="field">
+        <label>Cover Image (optional)</label>
+        <div class="drop-zone" id="thumb-zone">
+          <input type="file" id="inp-thumb" accept="image/*" onchange="handleThumb(this)"/>
+          <i class="ti ti-photo" style="display:block"></i>
+          <p>Drop image here or <span>browse</span></p>
+        </div>
+        <div class="file-pill" id="thumb-pill"><i class="ti ti-photo"></i><span id="thumb-name"></span></div>
+      </div>
+      <div class="field">
+        <label>Episodes</label>
+        <div class="ep-rows" id="ep-rows"></div>
+        <button class="add-ep" onclick="addEpRow()" style="margin-top:10px"><i class="ti ti-plus"></i> Add Episode</button>
+      </div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveAnime()"><i class="ti ti-check"></i> Save Anime</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="ti" id="toast-icon"></i>
+  <span id="toast-msg"></span>
+</div>
+
+<script>
+/* ═══════════ DATA ═══════════ */
+let db = JSON.parse(localStorage.getItem('anistream_v2') || '[]');
+let currentId = null, currentEp = 0, prevPage = 'home';
+const epFiles = {};
+let thumbFile = null, epRowCount = 0;
+
+const GENRES = [
+  {name:'Action',icon:'ti-sword'},{name:'Adventure',icon:'ti-map'},{name:'Comedy',icon:'ti-mood-happy'},
+  {name:'Drama',icon:'ti-masks-theater'},{name:'Fantasy',icon:'ti-wand'},{name:'Horror',icon:'ti-ghost'},
+  {name:'Mecha',icon:'ti-robot'},{name:'Mystery',icon:'ti-question-mark'},{name:'Romance',icon:'ti-heart'},
+  {name:'Sci-Fi',icon:'ti-rocket'},{name:'Slice of Life',icon:'ti-leaf'},{name:'Sports',icon:'ti-trophy'},
+  {name:'Supernatural',icon:'ti-sparkles'},{name:'Thriller',icon:'ti-eye'}
+];
+
+const FAQS = [
+  {q:'Is ANI ONE IN INDIA  really free?', a:'Yes, 100% free. No subscriptions, no hidden fees, no ads. We believe great software should be accessible to everyone.'},
+  {q:'Where are my uploaded videos stored?', a:'All your anime files are stored locally in your browser. Nothing is uploaded to any server. Your data never leaves your device.'},
+  {q:'Can I watch on multiple devices?', a:'Currently your library is tied to the browser you use. Export/import features are on our roadmap for cross-device sync.'},
+  {q:'What video formats are supported?', a:'ANI ONE IN INDIA supports all formats your browser supports: MP4, WebM, OGG, and MKV (in some browsers). MP4 with H.264 encoding is recommended for the best compatibility.'},
+  {q:'How do I report a bug?', a:'Use the contact form above and select "Bug Report". Please include your browser name, OS, and steps to reproduce the issue.'},
+];
+
+/* ═══════════ SAVE / LOAD ═══════════ */
+function saveDB() { localStorage.setItem('anistream_v2', JSON.stringify(db)); }
+
+/* ═══════════ NAVIGATION ═══════════ */
+function navTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  const el = document.getElementById('nl-' + page);
+  if (el) el.classList.add('active');
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+  if (page === 'home') { renderHome(); renderStats(); }
+  if (page === 'library') renderLibrary();
+  if (page === 'genres') renderGenres();
+  if (page === 'contact') renderFaq();
+  prevPage = page;
+}
+
+function goBack() { navTo(prevPage === 'player' ? 'home' : prevPage); }
+function toggleMobile() { document.getElementById('mobile-menu').classList.toggle('open'); }
+function closeMobile() { document.getElementById('mobile-menu').classList.remove('open'); }
+
+/* ═══════════ STATS ═══════════ */
+function renderStats() {
+  document.getElementById('stat-count').innerHTML = `<span>${db.length}</span>`;
+  const eps = db.reduce((s, a) => s + a.episodes.length, 0);
+  document.getElementById('stat-eps').innerHTML = `<span>${eps}</span>`;
+}
+
+/* ═══════════ CARD HTML ═══════════ */
+function animeCard(a) {
+  const thumb = a.thumbnail
+    ? `<img src="${a.thumbnail}" alt="${a.title}" loading="lazy"/>`
+    : `<div class="card-thumb-placeholder"><i class="ti ti-player-play"></i><span>${a.title}</span></div>`;
+  return `<div class="anime-card" onclick="openPlayer('${a.id}')">
+    <div class="card-thumb">
+      ${thumb}
+      <div class="play-over"><div class="play-ring"><i class="ti ti-player-play"></i></div></div>
+      <div class="card-badges">
+        <span class="cbadge cbadge-hd">HD</span>
+        ${a.episodes.length ? `<span class="cbadge cbadge-ep">${a.episodes.length} EP</span>` : ''}
+      </div>
+      <button class="card-del" onclick="event.stopPropagation();deleteAnime('${a.id}')"><i class="ti ti-trash"></i></button>
+    </div>
+    <div class="card-info">
+      <div class="card-title">${a.title}</div>
+      <div class="card-meta"><span>${a.genre}</span><span class="dot"></span><span>${a.status || 'Ongoing'}</span></div>
+    </div>
+  </div>`;
+}
+
+/* ═══════════ HOME ═══════════ */
+function renderHome() {
+  const g = document.getElementById('recent-grid');
+  const e = document.getElementById('recent-empty');
+  const recent = [...db].reverse().slice(0, 8);
+  if (!db.length) { g.innerHTML = ''; e.style.display = 'block'; }
+  else { e.style.display = 'none'; g.innerHTML = recent.map(animeCard).join(''); }
+
+  // genre strip
+  const gg = document.getElementById('home-genre-grid');
+  gg.innerHTML = GENRES.slice(0, 8).map(g =>
+    `<div class="genre-card" onclick="navTo('genres')">
+      <i class="ti ${g.icon}" style="display:block"></i><p>${g.name}</p>
+    </div>`).join('');
+}
+
+/* ═══════════ LIBRARY ═══════════ */
+function renderLibrary() {
+  const q = (document.getElementById('lib-search')?.value || '').toLowerCase();
+  const lg = document.getElementById('library-grid');
+  const le = document.getElementById('library-empty');
+  const list = [...db].reverse().filter(a => a.title.toLowerCase().includes(q));
+  if (!list.length) { lg.innerHTML = ''; le.style.display = 'block'; }
+  else { le.style.display = 'none'; lg.innerHTML = list.map(animeCard).join(''); }
+}
+
+/* ═══════════ GENRES ═══════════ */
+let activeGenre = null;
+function renderGenres() {
+  document.getElementById('all-genre-grid').innerHTML = GENRES.map(g =>
+    `<div class="genre-card" onclick="filterGenre('${g.name}')">
+      <i class="ti ${g.icon}" style="display:block"></i><p>${g.name}</p>
+    </div>`).join('');
+}
+function filterGenre(genre) {
+  activeGenre = genre;
+  const res = db.filter(a => a.genre === genre);
+  const sec = document.getElementById('genre-results');
+  document.getElementById('genre-res-title').innerHTML = `<i class="ti ti-filter"></i> ${genre} <span style="color:var(--muted);font-weight:400;font-size:14px">(${res.length})</span>`;
+  document.getElementById('genre-res-grid').innerHTML = res.length
+    ? res.map(animeCard).join('')
+    : `<div class="empty-state"><i class="ti ti-search-off"></i><h3>No anime found</h3><p>Upload some ${genre} anime to see them here.</p></div>`;
+  sec.style.display = 'block';
+  sec.scrollIntoView({ behavior: 'smooth' });
+}
+function clearGenreFilter() { document.getElementById('genre-results').style.display = 'none'; activeGenre = null; }
+
+/* ═══════════ DELETE ═══════════ */
+function deleteAnime(id) {
+  if (!confirm('Delete this anime from your library?')) return;
+  db = db.filter(a => a.id !== id);
+  saveDB();
+  renderHome(); renderLibrary(); renderStats();
+  showToast('Anime deleted', 'error');
+}
+
+/* ═══════════ PLAYER ═══════════ */
+function openPlayer(id) {
+  const a = db.find(x => x.id === id);
+  if (!a) return;
+  prevPage = document.querySelector('.nav-link.active')?.id?.replace('nl-', '') || 'home';
+  currentId = id; currentEp = 0;
+  document.getElementById('player-nav-title').textContent = a.title;
+  document.getElementById('player-title').textContent = a.title;
+  document.getElementById('player-desc').textContent = a.description || 'No description provided.';
+  document.getElementById('player-tags').innerHTML =
+    `<span class="ptag">${a.genre}</span><span class="ptag">${a.status || 'Ongoing'}</span><span class="ptag">${a.episodes.length} Episodes</span>`;
+  renderEpList(a);
+  navTo('player');
+  if (a.episodes.length) playEp(id, 0, true);
+}
+
+function renderEpList(a) {
+  const eg = document.getElementById('ep-grid');
+  if (!a.episodes.length) { eg.innerHTML = `<p style="font-size:13px;color:var(--muted);grid-column:1/-1">No episodes yet. Add one above.</p>`; return; }
+  eg.innerHTML = a.episodes.map((ep, i) =>
+    `<button class="ep-btn${i === currentEp ? ' active' : ''}" onclick="playEp('${a.id}',${i})">${i + 1}</button>`).join('');
+}
+
+function playEp(animeId, idx, silent) {
+  const a = db.find(x => x.id === animeId);
+  if (!a || !a.episodes[idx]) return;
+  currentEp = idx;
+  document.querySelectorAll('.ep-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  const vw = document.getElementById('video-wrap');
+  vw.innerHTML = `<video controls autoplay src="${a.episodes[idx].url}" style="width:100%;height:100%;display:block" onended="nextEp()"></video>`;
+}
+
+function nextEp() {
+  const a = db.find(x => x.id === currentId);
+  if (a && currentEp + 1 < a.episodes.length) playEp(currentId, currentEp + 1);
+}
+
+function addEpToPlaying() {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'video/*';
+  inp.onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const a = db.find(x => x.id === currentId); if (!a) return;
+    a.episodes.push({ name: `Episode ${a.episodes.length + 1}`, url: URL.createObjectURL(f), fileName: f.name });
+    saveDB(); renderEpList(a); renderStats();
+    showToast('Episode added!', 'success');
+  };
+  inp.click();
+}
+
+/* ═══════════ MODAL ═══════════ */
+function openModal() {
+  epRowCount = 0; thumbFile = null;
+  for (const k in epFiles) delete epFiles[k];
+  ['inp-title','inp-desc'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('inp-genre').selectedIndex = 0;
+  document.getElementById('inp-status').selectedIndex = 0;
+  document.getElementById('ep-rows').innerHTML = '';
+  document.getElementById('thumb-pill').style.display = 'none';
+  document.getElementById('modal-overlay').classList.add('open');
+  addEpRow();
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+
+function addEpRow() {
+  const idx = epRowCount++;
+  const div = document.createElement('div');
+  div.className = 'ep-row'; div.id = 'ep-row-' + idx;
+  div.innerHTML = `<span class="ep-row-label">Ep ${idx + 1}</span>
+    <span class="ep-row-name" id="ep-fn-${idx}">No file chosen</span>
+    <button class="ep-pick" onclick="pickEp(${idx})"><i class="ti ti-upload"></i> Browse</button>
+    ${idx > 0 ? `<button class="ep-del-btn" onclick="removeEpRow(${idx})"><i class="ti ti-x"></i></button>` : ''}`;
+  document.getElementById('ep-rows').appendChild(div);
+}
+
+function removeEpRow(idx) {
+  const el = document.getElementById('ep-row-' + idx);
+  if (el) el.remove();
+  delete epFiles[idx];
+}
+
+function pickEp(idx) {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'video/*';
+  inp.onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    epFiles[idx] = f;
+    const s = document.getElementById('ep-fn-' + idx);
+    if (s) s.textContent = f.name;
+  };
+  inp.click();
+}
+
+function handleThumb(inp) {
+  const f = inp.files[0]; if (!f) return;
+  thumbFile = f;
+  document.getElementById('thumb-name').textContent = f.name;
+  document.getElementById('thumb-pill').style.display = 'flex';
+}
+
+function saveAnime() {
+  const title = document.getElementById('inp-title').value.trim();
+  if (!title) { showToast('Please enter a title', 'error'); return; }
+  const genre = document.getElementById('inp-genre').value;
+  const status = document.getElementById('inp-status').value;
+  const desc = document.getElementById('inp-desc').value.trim();
+  const episodes = Object.entries(epFiles)
+    .sort(([a],[b]) => Number(a) - Number(b))
+    .map(([i, f], n) => ({ name: `Episode ${n + 1}`, url: URL.createObjectURL(f), fileName: f.name }));
+  const thumbnail = thumbFile ? URL.createObjectURL(thumbFile) : '';
+  const anime = { id: 'a' + Date.now() + Math.random().toString(36).slice(2), title, genre, status, description: desc, thumbnail, episodes, createdAt: Date.now() };
+  db.unshift(anime);
+  saveDB();
+  closeModal();
+  renderHome(); renderLibrary(); renderStats();
+  showToast(`"${title}" uploaded!`, 'success');
+}
+
+/* ═══════════ CONTACT ═══════════ */
+function submitContact() {
+  const fname = document.getElementById('cf-fname').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const subject = document.getElementById('cf-subject').value;
+  const msg = document.getElementById('cf-msg').value.trim();
+  if (!fname || !email || !subject || !msg) { showToast('Please fill all required fields', 'error'); return; }
+  if (!/\S+@\S+\.\S+/.test(email)) { showToast('Please enter a valid email', 'error'); return; }
+  document.getElementById('contact-form').style.display = 'none';
+  document.getElementById('contact-success').style.display = 'block';
+}
+function resetContact() {
+  document.getElementById('contact-form').style.display = 'block';
+  document.getElementById('contact-success').style.display = 'none';
+  ['cf-fname','cf-lname','cf-email','cf-msg'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('cf-subject').selectedIndex = 0;
+}
+
+function renderFaq() {
+  const fl = document.getElementById('faq-list');
+  if (fl.innerHTML) return;
+  fl.innerHTML = FAQS.map((f, i) => `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+      <button onclick="toggleFaq(${i})" style="width:100%;background:none;border:none;color:var(--text);padding:16px 20px;text-align:left;cursor:pointer;font-size:15px;font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:var(--font)">
+        <span>${f.q}</span><i class="ti ti-chevron-down" id="faq-icon-${i}" style="font-size:18px;color:var(--muted);flex-shrink:0;transition:transform .2s"></i>
+      </button>
+      <div id="faq-body-${i}" style="display:none;padding:0 20px 16px;color:var(--muted);font-size:14px;line-height:1.7">${f.a}</div>
+    </div>`).join('');
+}
+function toggleFaq(i) {
+  const body = document.getElementById('faq-body-' + i);
+  const icon = document.getElementById('faq-icon-' + i);
+  const open = body.style.display === 'block';
+  body.style.display = open ? 'none' : 'block';
+  icon.style.transform = open ? '' : 'rotate(180deg)';
+}
+
+/* ═══════════ TOAST ═══════════ */
+function showToast(msg, type = 'info') {
+  const t = document.getElementById('toast');
+  const ic = document.getElementById('toast-icon');
+  const ms = document.getElementById('toast-msg');
+  t.className = 'toast ' + type;
+  ic.className = 'ti ' + (type === 'success' ? 'ti-circle-check' : type === 'error' ? 'ti-alert-circle' : 'ti-info-circle');
+  ms.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+/* ═══════════ INIT ═══════════ */
+renderHome();
+renderStats();
+renderGenres();
+</script>
+</body>
+</html>
